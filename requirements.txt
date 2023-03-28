@@ -1,3 +1,4 @@
 Flask
 markupsafe
 jinja2
+werkzeug
