@@ -41,4 +41,4 @@ jobs:
       run: |
         pip3 install awscli
         zip -r package.zip ./*
-        aws lambda update-function-code --function-name lambda_function --zip-file fileb://package.zip --publish
+        aws lambda update-function-code --function-name ChatBotFunction --zip-file fileb://package.zip --publish
