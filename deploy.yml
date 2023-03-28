@@ -1,11 +1,9 @@
 name: AWS Lambda Deploy
 
 on:
-  push:
-    branches: [ "main" ]
-
-env:
-  AWS_REGION: ${{ secrets.AWS_REGION }}
+  pull_request:
+    branches:
+      - main
 
 jobs:
   deploy:
@@ -23,15 +21,15 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
+        aws-region: ${{ secrets.AWS_REGION }}
 
     - name: get-caller-identity is allowed to run on role.
       run: aws sts get-caller-identity
 
     - name: setup-python
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v2
       with:
-        python-version: '3.9'
+        python-version: '3.x'
 
     - name: lambda update
       run: |
