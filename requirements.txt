@@ -1,2 +1,3 @@
 Flask
 markupsafe
+jinja2
