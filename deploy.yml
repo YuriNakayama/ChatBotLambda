@@ -1,4 +1,5 @@
 # awsへのdeploy
+# 
 name: AWS Lambda Deploy
 
 on:
@@ -36,8 +37,24 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: lambda update
+    - name: Install dependencies
       run: |
-        pip3 install awscli
-        cd lambda && zip -r package.zip ./*
-        aws lambda update-function-code --function-name test-http --zip-file fileb://package.zip --publish
+        pip3 install virtualenv
+        virtualenv venv
+        source venv/bin/activate
+        pip3 install -r requirements.txt --no-deps --target ./package
+
+    - name: Copy lambda_function.py to package directory
+      run: cp lambda_function.py ./package
+
+    - name: Create deployment package
+      run: |
+        cd package
+        zip -r9 ${OLDPWD}/function.zip .
+
+    - name: Upload deployment package
+      run: |
+        aws lambda update-function-code \
+          --function-name ChatBotFunction \
+          --zip-file fileb://function.zip \
+          --publish
