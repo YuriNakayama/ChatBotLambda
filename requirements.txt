@@ -18,3 +18,4 @@ aiohttp
 multidict
 attr
 yarl
+async_timeout
