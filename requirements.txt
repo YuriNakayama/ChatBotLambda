@@ -14,3 +14,4 @@ requests
 charset_normalizer
 idna
 certifi
+aiohttp
