@@ -4,3 +4,5 @@ jinja2
 werkzeug
 click
 itsdangerous
+openai
+line-bot-sdk
