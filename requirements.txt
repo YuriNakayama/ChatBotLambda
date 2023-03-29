@@ -15,3 +15,4 @@ charset_normalizer
 idna
 certifi
 aiohttp
+multidict
