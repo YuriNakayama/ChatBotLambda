@@ -16,3 +16,4 @@ idna
 certifi
 aiohttp
 multidict
+attr
