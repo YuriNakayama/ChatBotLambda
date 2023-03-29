@@ -10,4 +10,4 @@ markupsafe
 jinja2
 werkzeug
 click
-itsdangerous
+requests
