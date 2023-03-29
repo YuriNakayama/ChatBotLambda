@@ -12,3 +12,4 @@ werkzeug
 click
 requests
 charset_normalizer
+idna
