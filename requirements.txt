@@ -5,4 +5,9 @@ werkzeug
 click
 itsdangerous
 openai
-line-bot-sdk
+line-bot-sdkFlask
+markupsafe
+jinja2
+werkzeug
+click
+itsdangerous
