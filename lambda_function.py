@@ -18,7 +18,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY", None)
 
 def lambda_handler(event, context):
     logger.info(f"Received event: {json.dumps(event)}")
-    body = json.loads(event['body'])
+    body = event['body']
     logger.debug(f"Body: {body}")
 
     for e in body["events"]:
