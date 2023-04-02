@@ -1,4 +1,3 @@
-# +
 import json
 import logging
 import os
@@ -6,7 +5,6 @@ import os
 import requests
 
 import openai
-# -
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -19,10 +17,10 @@ openai.api_key = os.getenv("OPENAI_API_KEY", None)
 
 
 def lambda_handler(event, context):
-    logger.info(f"Received event: {json.dumps(event)}")  
+    logger.info(f"Received event: {json.dumps(event)}")
     body = json.loads(event['body'])
-    print(f"Body: {body}") 
-    
+    logger.debug(f"Body: {body}")
+
     for e in body["events"]:
         reply_token = e["replyToken"]
         message_type = e["message"]["type"]
@@ -31,7 +29,6 @@ def lambda_handler(event, context):
             message_text = e["message"]["text"]
             reply_text = generate_reply(message_text)
             reply_message(reply_token, reply_text)
-
     return {
         "statusCode": 200,
         "headers": {"Content-Type": "application/json"},
@@ -39,16 +36,16 @@ def lambda_handler(event, context):
     }
 
 
+
 def generate_reply(user_message):
-    pre_prompt = f"あなたは自由民主党支持者です。以後の会話では常に自由民主党支持者らしく振る舞ってください。また、返答は常に自由民主党を支持する内容になるようにしてください。"
-    prompt = f"{pre_prompt}\n\n{user_message}"
+    pre_prompt = "あなたは哲学者です。以下の会話では常に哲学者らしく振る舞ってください。また、以下の文章への返答は、常に自由を支持する内容に4行以内になるようにしてください。"
+    prompt = f"{pre_prompt} \n \n Text:'''{user_message}'''"
     response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=prompt,
         max_tokens=1000,
         n=3,
         stop=None,
-        top_p=0.5,
         temperature=0.5,
     )
 
@@ -72,3 +69,16 @@ def reply_message(reply_token, message_text):
         headers=headers,
         data=json.dumps(payload),
     )
+
+    if response.status_code != 200:
+        logger.error(f"Failed to send reply message: {response.text}")
+        return {
+            "statusCode": 500,
+            "body": json.dumps({"message": "Failed to send reply message"}),
+        }
+    else:
+        logger.debug(f"Reply message sent: {message_text}")
+        return {
+            "statusCode": 200,
+            "body": json.dumps({"message": "Reply message sent"}),
+        }
