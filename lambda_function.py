@@ -70,15 +70,15 @@ def reply_message(reply_token, message_text):
         data=json.dumps(payload),
     )
 
-    if response.status_code != 200:
-        logger.error(f"Failed to send reply message: {response.text}")
-        return {
-            "statusCode": 500,
-            "body": json.dumps({"message": "Failed to send reply message"}),
-        }
-    else:
-        logger.debug(f"Reply message sent: {message_text}")
-        return {
-            "statusCode": 200,
-            "body": json.dumps({"message": "Reply message sent"}),
-        }
+    # if response.status_code != 200:
+    #     logger.error(f"Failed to send reply message: {response.text}")
+    #     return {
+    #         "statusCode": 500,
+    #         "body": json.dumps({"message": "Failed to send reply message"}),
+    #     }
+    # else:
+    #     logger.debug(f"Reply message sent: {message_text}")
+    #     return {
+    #         "statusCode": 200,
+    #         "body": json.dumps({"message": "Reply message sent"}),
+    #     }
