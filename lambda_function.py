@@ -18,7 +18,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY", None)
 
 def lambda_handler(event, context):
     logger.info(f"Received event: {json.dumps(event)}")
-    body = json.loads(json.dumps(event['body']))
+    body = json.loads(event['body'])
     logger.debug(f"Body: {body}")
 
     for e in body["events"]:
@@ -29,6 +29,12 @@ def lambda_handler(event, context):
             message_text = e["message"]["text"]
             reply_text = generate_reply(message_text)
             reply_message(reply_token, reply_text)
+    return {
+        "statusCode": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": json.dumps({"message": "OK"}),
+    }
+
 
 
 def generate_reply(user_message):
@@ -37,7 +43,7 @@ def generate_reply(user_message):
     response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=prompt,
-        max_tokens=500,
+        max_tokens=1000,
         n=3,
         stop=None,
         temperature=0.5,
