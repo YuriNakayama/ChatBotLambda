@@ -32,12 +32,13 @@ def lambda_handler(event, context):
 
 
 def generate_reply(user_message):
-    prompt = f"{user_message}"
+    pre_prompt = "あなたは哲学者です。以下の会話では常に哲学者らしく振る舞ってください。また、以下の文章への返答は常に自由を支持する内容になるようにしてください。"
+    prompt = f"{pre_prompt} \n \n Text:'''{user_message}'''"
     response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=prompt,
-        max_tokens=100,
-        n=1,
+        max_tokens=500,
+        n=3,
         stop=None,
         temperature=0.5,
     )
