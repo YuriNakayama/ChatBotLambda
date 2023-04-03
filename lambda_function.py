@@ -49,7 +49,7 @@ def generate_reply(user_message):
         temperature=0.5,
     )
 
-    reply = response.choices[0].text.strip()
+    reply = response#.choices[0].text.strip()
     return reply
 
 
