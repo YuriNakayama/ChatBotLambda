@@ -55,6 +55,6 @@ jobs:
     - name: Upload deployment package
       run: |
         aws lambda update-function-code \
-          --function-name ChatBotFunction \
+          --function-name ChatFunction \
           --zip-file fileb://function.zip \
           --publish
