@@ -38,18 +38,19 @@ def lambda_handler(event, context):
 
 
 def generate_reply(user_message):
-    pre_prompt = "あなたは哲学者です。以下の会話では常に哲学者らしく振る舞ってください。また、以下の文章への返答は、常に自由を支持する内容に4行以内になるようにしてください。"
+    pre_prompt = "あなたは哲学者です。以下の会話では常に哲学者らしく振る舞ってください。また、以下の文章への返答は、常に4行以内の日本語で、自由を支持する内容にしてください。"
     prompt = f"{pre_prompt} \n \n Text:'''{user_message}'''"
     response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=prompt,
         max_tokens=1000,
-        n=3,
+        n=1,
         stop=None,
         temperature=0.5,
+        presence_penalty=1.0,
     )
 
-    reply = response.choices[0].text.strip()
+    reply = response.choices[0].text
     return reply
 
 
